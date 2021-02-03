@@ -13,8 +13,81 @@ class BigNumber {
     // Suma
 
     BigNumber add(BigNumber other) {
-        return null;
+        BigNumber addition = new BigNumber("");
+        int carry = 0;
+
+        if (this.number.charAt(0) == '0') {
+            this.RemoveZeros(this);
+        }
+        if (other.number.charAt(0) == '0') {
+            other.RemoveZeros(other);
+        }
+
+        if (this.number.charAt(0) == '0' && other.number.charAt(0) == '0') {
+            addition.number = "0";
+        } else {
+            if (this.number.charAt(0) == '0' && other.number.charAt(0) != '0') {
+                addition.number = other.number;
+            } else {
+                if (this.number.charAt(0) != '0' && other.number.charAt(0) == '0') {
+                    addition.number = this.number;
+                } else {
+                    if (this.number.length() == other.number.length()) {
+                        for (int i = this.number.length() - 1; i >= 0; i--) {
+                            char char1 = this.number.charAt(i);
+                            char char2 = other.number.charAt(i);
+                            char add = (char) (char1 + char2 - 48 + carry);
+                            if (carry == 1) carry--;
+                            if (add >= 58) {
+                                add = (char) (add - 10);
+                                carry++;
+                            }
+                            addition.number += add;
+                            if (carry == 1 && i == 0) addition.number += carry;
+                        }
+                    }
+
+                    if (this.number.length() > other.number.length()) {
+                        other.AddZeros(this);
+                        for (int i = this.number.length() - 1; i >= 0; i--) {
+                            char char1 = this.number.charAt(i);
+                            char char2 = other.number.charAt(i);
+                            char add = (char) (char1 + char2 - 48 + carry);
+                            if (carry == 1) carry--;
+                            if (add >= 58) {
+                                add = (char) (add - 10);
+                                carry++;
+                            }
+                            addition.number += add;
+                            if (carry == 1 && i == 0) addition.number += carry;
+                        }
+                    }
+
+                    if (this.number.length() < other.number.length()) {
+                        this.AddZeros(other);
+                        for (int i = this.number.length() - 1; i >= 0; i--) {
+                            char char1 = this.number.charAt(i);
+                            char char2 = other.number.charAt(i);
+                            char add = (char) (char1 + char2 - 48 + carry);
+                            if (carry == 1) carry--;
+                            if (add >= 58) {
+                                add = (char) (add - 10);
+                                carry++;
+                            }
+                            addition.number += add;
+                            if (carry == 1 && i == 0) addition.number += carry;
+                        }
+                    }
+
+                    addition.InvertString(addition);}
+            }
+        }
+
+        System.out.println(addition.number);
+        return addition;
+
     }
+
 
     // Resta
     BigNumber sub(BigNumber other) {
@@ -103,6 +176,13 @@ class BigNumber {
         }
         WithZeros.number += this.number;
         this.number = WithZeros.number;
+    }
+    public void InvertString(BigNumber b)   {
+        BigNumber Invert = new BigNumber("");
+        for (int i = b.number.length()-1; i >= 0 ; i--) {
+            Invert.number += b.number.charAt(i);
+        }
+        b.number = Invert.number;
     }
 
 
