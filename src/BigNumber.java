@@ -1,12 +1,9 @@
 class BigNumber {
-    String valor;
+    public String number;
 
     // Constructor 1
     public BigNumber(String s) {
-        if (s.charAt(0) == '0'){
-            s = s.substring(1);
-        }
-        this.valor = s;
+        this.number = s;
     }
 
     // Constructor 2
@@ -68,10 +65,45 @@ class BigNumber {
     // Mira si dos objectes BigNumber són iguals
     @Override
     public boolean equals(Object other) {
-        BigNumber b = (BigNumber) other;
-        if (this.valor.equals(b.valor)) {
-            return true;
+        if (other instanceof BigNumber) {
+            BigNumber o = (BigNumber) other;
+            if (this.number.charAt(0) == '0') {
+                this.RemoveZeros(this);
+            }
+
+            if (o.number.charAt(0) == '0') {
+                o.RemoveZeros(o);
+            }
+
+            if (this.number.charAt(0) == '0' && o.number.charAt(0) == '0') return true;
+
+            return this.number.equals(o.number);
         }
         return false;
     }
+
+    public void RemoveZeros(BigNumber b) {
+        BigNumber NoZero = new BigNumber("");
+        for (int i = 0 ; i < b.number.length(); i++) {
+            if (b.number.charAt(i) != '0') {
+                for (int j = i; j < b.number.length() ; j++) {
+                    NoZero.number += b.number.charAt(j);
+                }
+                b.number = NoZero.number;
+                break;
+            }
+        }
+    }
+
+    public void AddZeros(BigNumber b) {
+        BigNumber WithZeros = new BigNumber("");
+        int diff = b.number.length() - this.number.length();
+        for (int i = 0; i < diff ; i++) {
+            WithZeros.number += 0;
+        }
+        WithZeros.number += this.number;
+        this.number = WithZeros.number;
+    }
+
+
 }
