@@ -79,7 +79,8 @@ class BigNumber {
                         }
                     }
 
-                    addition.InvertString(addition);}
+                    addition.InvertString(addition);
+                }
             }
         }
 
@@ -108,7 +109,7 @@ class BigNumber {
         }
 
         if (this.number.length() == other.number.length()) {
-            for (int i = this.number.length()-1; i >= 0 ; i--) {
+            for (int i = this.number.length() - 1; i >= 0; i--) {
                 char char1 = this.number.charAt(i);
                 char char2 = (char) (other.number.charAt(i) + carry);
                 char subChar = 0;
@@ -134,7 +135,7 @@ class BigNumber {
 
         if (this.number.length() > other.number.length()) {
             other.AddZeros(this);
-            for (int i = this.number.length()-1; i >= 0 ; i--) {
+            for (int i = this.number.length() - 1; i >= 0; i--) {
                 char char1 = this.number.charAt(i);
                 char char2 = (char) (other.number.charAt(i) - carry);
                 char subChar = 0;
@@ -161,7 +162,7 @@ class BigNumber {
 
         if (this.number.length() < other.number.length()) {
             this.AddZeros(other);
-            for (int i = this.number.length()-1; i >= 0 ; i--) {
+            for (int i = this.number.length() - 1; i >= 0; i--) {
                 char char1 = this.number.charAt(i);
                 char char2 = (char) (other.number.charAt(i) - carry);
                 char subChar = 0;
@@ -207,10 +208,10 @@ class BigNumber {
 
         String[] addResults = new String[other.number.length()];
 
-        for (int i = other.number.length() - 1; i >= 0 ; i--) {
+        for (int i = other.number.length() - 1; i >= 0; i--) {
             char char1 = (char) (other.number.charAt(i) - 48);
             if (i < other.number.length() - 1) {
-                for (int j = 0; j < other.number.length()-1-i ; j++) {
+                for (int j = 0; j < other.number.length() - 1 - i; j++) {
                     results += 0;
                 }
             }
@@ -226,7 +227,7 @@ class BigNumber {
                     carry++;
                 }
 
-                results += (int)adds;
+                results += (int) adds;
             }
             if (carry != 0) results += carry;
 
@@ -237,7 +238,7 @@ class BigNumber {
 
         for (int i = 0; i < addResults.length; i++) {
             String invert = "";
-            for (int j = addResults[i].length() -1; j >= 0; j--) {
+            for (int j = addResults[i].length() - 1; j >= 0; j--) {
                 invert += addResults[i].charAt(j);
             }
             addResults[i] = invert;
@@ -275,6 +276,68 @@ class BigNumber {
 
     // Divideix
     BigNumber div(BigNumber other) {
+        BigNumber thisDiv = new BigNumber(this.number);
+        BigNumber otherDiv = new BigNumber(other.number);
+        BigNumber mult = new BigNumber("0");
+        BigNumber add = new BigNumber("1");
+        String quocient = "";
+
+        if (other.compareTo(this) == 0) {
+            mult.number = "1";
+        } else {
+            if (other.compareTo(this) == 1) {
+                mult.number = "0";
+            } else {
+                while (other.compareTo(thisDiv) <= 0) {
+                    thisDiv.number = "";
+
+                    for (int i = 0; i < other.number.length(); i++) {
+                        thisDiv.number += this.number.charAt(i);
+                    }
+
+                    if (other.compareTo(this) == 0) {
+                        mult.number = "1";
+                    } else {
+                        if (other.compareTo(this) == 1) {
+                            mult.number = "0";
+                        } else {
+                            if (thisDiv.compareTo(this) == -1) {
+                                if (other.number.length() >= this.number.length()) {
+                                    mult.number = "0";
+                                    break;
+                                }
+                                thisDiv.number += this.number.charAt(other.number.length());
+                            }
+                        }
+                    }
+                    while (otherDiv.compareTo(thisDiv) <= 0) {
+                        otherDiv = other.mult(mult);
+                        mult = mult.add(add);
+                    }
+
+                    if (otherDiv.compareTo(thisDiv) >= 0) {
+                        BigNumber sub = new BigNumber("2");
+                        mult = mult.sub(sub);
+                    }
+                    otherDiv = otherDiv.sub(other);
+
+                    otherDiv.InvertString(otherDiv);
+                    otherDiv.AddZeros(this);
+                    otherDiv.InvertString(otherDiv);
+
+                    this.number = this.sub(otherDiv).number;
+                    thisDiv.number = this.number;
+
+                    quocient += mult.number;
+
+                    if (thisDiv.number.equals("0")) quocient += 0;
+
+                    mult.number = "1";
+                    otherDiv = other;
+                }
+            }
+        }
+        mult.number = quocient;
         return null;
     }
 
@@ -331,9 +394,9 @@ class BigNumber {
 
     public void RemoveZeros(BigNumber b) {
         BigNumber NoZero = new BigNumber("");
-        for (int i = 0 ; i < b.number.length(); i++) {
+        for (int i = 0; i < b.number.length(); i++) {
             if (b.number.charAt(i) != '0') {
-                for (int j = i; j < b.number.length() ; j++) {
+                for (int j = i; j < b.number.length(); j++) {
                     NoZero.number += b.number.charAt(j);
                 }
                 b.number = NoZero.number;
@@ -345,15 +408,16 @@ class BigNumber {
     public void AddZeros(BigNumber b) {
         BigNumber WithZeros = new BigNumber("");
         int diff = b.number.length() - this.number.length();
-        for (int i = 0; i < diff ; i++) {
+        for (int i = 0; i < diff; i++) {
             WithZeros.number += 0;
         }
         WithZeros.number += this.number;
         this.number = WithZeros.number;
     }
-    public void InvertString(BigNumber b)   {
+
+    public void InvertString(BigNumber b) {
         BigNumber Invert = new BigNumber("");
-        for (int i = b.number.length()-1; i >= 0 ; i--) {
+        for (int i = b.number.length() - 1; i >= 0; i--) {
             Invert.number += b.number.charAt(i);
         }
         b.number = Invert.number;
