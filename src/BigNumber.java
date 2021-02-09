@@ -284,24 +284,29 @@ class BigNumber {
 
         if (other.compareTo(this) == 0) {
             mult.number = "1";
+
         } else {
             if (other.compareTo(this) == 1) {
                 mult.number = "0";
+
             } else {
                 while (other.compareTo(thisDiv) <= 0) {
                     thisDiv.number = "";
 
-                    for (int i = 0; i < other.number.length(); i++) {
+                    for (int i = 0; i < other.number.length() ; i++) {
                         thisDiv.number += this.number.charAt(i);
                     }
 
                     if (other.compareTo(this) == 0) {
                         mult.number = "1";
+
                     } else {
                         if (other.compareTo(this) == 1) {
                             mult.number = "0";
+
                         } else {
-                            if (thisDiv.compareTo(this) == -1) {
+
+                            if (thisDiv.compareTo(other) == -1) {
                                 if (other.number.length() >= this.number.length()) {
                                     mult.number = "0";
                                     break;
@@ -310,7 +315,8 @@ class BigNumber {
                             }
                         }
                     }
-                    while (otherDiv.compareTo(thisDiv) <= 0) {
+
+                    while (otherDiv.compareTo(thisDiv) <= 0 ) {
                         otherDiv = other.mult(mult);
                         mult = mult.add(add);
                     }
@@ -319,7 +325,9 @@ class BigNumber {
                         BigNumber sub = new BigNumber("2");
                         mult = mult.sub(sub);
                     }
+
                     otherDiv = otherDiv.sub(other);
+
 
                     otherDiv.InvertString(otherDiv);
                     otherDiv.AddZeros(this);
@@ -337,9 +345,11 @@ class BigNumber {
                 }
             }
         }
+
         mult.number = quocient;
-        return null;
+        return mult;
     }
+
 
     // Arrel quadrada
     BigNumber sqrt() {
@@ -348,8 +358,32 @@ class BigNumber {
 
     // Potència
     BigNumber power(int n) {
+        BigNumber power = new BigNumber("");
+
+        if (this.number.charAt(0) == '0') this.RemoveZeros(this);
+
+        if (n == 0) return new BigNumber("1");
+
+        if (n == 1) return this;
+
+        if (n == 2) {
+            power = this.mult(this);
+            System.out.println(power.number);
+            return power;
+        }
+
+        if (n > 2) {
+            power = this.mult(this);
+
+            for (int i = 0; i < n - 2; i++) {
+                power = power.mult(this);
+            }
+            return power;
+        }
+
         return null;
     }
+
 
     // Factorial
     BigNumber factorial() {
