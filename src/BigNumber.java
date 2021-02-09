@@ -293,7 +293,7 @@ class BigNumber {
                 while (other.compareTo(thisDiv) <= 0) {
                     thisDiv.number = "";
 
-                    for (int i = 0; i < other.number.length() ; i++) {
+                    for (int i = 0; i < other.number.length(); i++) {
                         thisDiv.number += this.number.charAt(i);
                     }
 
@@ -316,7 +316,7 @@ class BigNumber {
                         }
                     }
 
-                    while (otherDiv.compareTo(thisDiv) <= 0 ) {
+                    while (otherDiv.compareTo(thisDiv) <= 0) {
                         otherDiv = other.mult(mult);
                         mult = mult.add(add);
                     }
@@ -387,8 +387,24 @@ class BigNumber {
 
     // Factorial
     BigNumber factorial() {
-        return null;
+        if (this.number.charAt(0) == '0') this.RemoveZeros(this);
+
+        BigNumber factorial = new BigNumber(this.number);
+        BigNumber sub = new BigNumber("1");
+        BigNumber factorialAdd = new BigNumber("1");
+
+        if (this.number.equals("0")) {
+            return factorialAdd;
+        } else {
+            while (!factorial.number.equals("1")) {
+                factorialAdd = factorialAdd.mult(factorial);
+                factorial = factorial.sub(sub);
+                System.out.println(factorialAdd.number);
+            }
+        }
+        return factorialAdd;
     }
+
 
     // MCD. Torna el Màxim comú divisor
     BigNumber mcd(BigNumber other) {
@@ -398,13 +414,69 @@ class BigNumber {
     // Compara dos BigNumber. Torna 0 si són iguals, -1
 // si el primer és menor i torna 1 si el segon és menor
     public int compareTo(BigNumber other) {
-        return -1;
+        int number = 2;
+        if (this.number.charAt(0) == '0') {
+            this.RemoveZeros(this);
+        }
+        if (other.number.charAt(0) == '0') {
+            other.RemoveZeros(other);
+        }
+
+        if (this.number.charAt(0) == '0' && other.number.charAt(0) == '0') {
+            number = 0;
+        } else {
+            if (this.number.charAt(0) == '0' && other.number.charAt(0) != '0') {
+                number = -1;
+            } else {
+                if (this.number.charAt(0) != '0' && other.number.charAt(0) == '0') {
+                    number = 1;
+                } else {
+                    if (this.number.equals(other.number)) number = 0;
+
+                    if (this.number.length() > other.number.length()) number = 1;
+
+                    if (this.number.length() < other.number.length()) number = -1;
+
+                    if (this.number.length() == other.number.length()) {
+                        for (int i = 0; i < this.number.length(); i++) {
+                            if (this.number.charAt(i) > other.number.charAt(i)) {
+                                number = 1;
+                                break;
+                            }
+
+                            if (this.number.charAt(i) < other.number.charAt(i)) {
+                                number = -1;
+                                break;
+                            }
+
+                            if (this.number.charAt(i) == other.number.charAt(i)) {
+                                if (i == this.number.length() - 1) i--;
+                                i++;
+
+                                if (this.number.charAt(i) > other.number.charAt(i)) {
+                                    number = 1;
+                                    break;
+                                }
+
+                                if (this.number.charAt(i) < other.number.charAt(i)) {
+                                    number = -1;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return number;
     }
+
 
     // Torna un String representant el número
     public String toString() {
-        return "";
+        return this.number;
     }
+
 
     // Mira si dos objectes BigNumber són iguals
     @Override
@@ -426,6 +498,7 @@ class BigNumber {
         return false;
     }
 
+
     public void RemoveZeros(BigNumber b) {
         BigNumber NoZero = new BigNumber("");
         for (int i = 0; i < b.number.length(); i++) {
@@ -438,6 +511,7 @@ class BigNumber {
             }
         }
     }
+
 
     public void AddZeros(BigNumber b) {
         BigNumber WithZeros = new BigNumber("");
@@ -456,6 +530,5 @@ class BigNumber {
         }
         b.number = Invert.number;
     }
-
 
 }

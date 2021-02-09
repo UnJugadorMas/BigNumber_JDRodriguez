@@ -251,7 +251,7 @@ public class BigNumberTest {
         assertEquals(new BigNumber("5673"), b1.div(b2));
     }
 
-    @Test
+   /* @Test
     public void arrels() {
         BigNumber b1;
 
@@ -272,7 +272,7 @@ public class BigNumberTest {
 
         b1 = new BigNumber("5431653867945764312451245128282828356497646538659435623124356794543721244424242455545454578787878788878788845424542154213464519787546754213401004042134275450012431245797845764210427345187242");
         assertEquals(new BigNumber("73699754870323444736249368421986319511585860927501064567285148011894494673039496223465592189750"), b1.sqrt());
-    }
+    }*/
 
     @Test
     public void potencies() {
@@ -309,7 +309,7 @@ public class BigNumberTest {
                 new BigNumber("500").factorial());
     }
 
-    @Test
+   /*@Test
     public void mcd() {
         BigNumber b1, b2;
 
@@ -330,5 +330,5 @@ public class BigNumberTest {
         //assertEquals(new BigNumber("4"), b1.mcd(b2));
     }
 
-
+*/
 }
