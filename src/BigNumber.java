@@ -125,7 +125,6 @@ class BigNumber {
                 if (char1 == char2) {
                     subChar = 48;
                 }
-
                 sub.number += subChar;
             }
         }
@@ -177,11 +176,9 @@ class BigNumber {
 
             }
         }
-
         sub.invertString(sub);
         sub.removeZeros(sub);
         return sub;
-
     }
 
     // Multiplicació
@@ -483,16 +480,16 @@ class BigNumber {
                 //Llevam els 0 que sobren
                 o.removeZeros(o);
             }
-        //si els 2 numeros tenen 0 tornam el valor true
+            //si els 2 numeros tenen 0 tornam el valor true
             if (this.number.charAt(0) == '0' && o.number.charAt(0) == '0') return true;
-        //tornam el valor de number modificat fora 0
+            //tornam el valor de number modificat fora 0
             return this.number.equals(o.number);
         }
         //retornam false si no te cap 0 els 2 numeros
         return false;
     }
 
-//clase per llevar 0 que sobren en la llargaria, que no tenguin cap valor
+    //clase per llevar 0 que sobren en la llargaria, que no tenguin cap valor
     public void removeZeros(BigNumber b) {
         //Variable per enmagatzemar el valor
         BigNumber noZero = new BigNumber("");
@@ -512,7 +509,7 @@ class BigNumber {
         }
     }
 
-//clase per afegir 0 faltants en la llargaria
+    //clase per afegir 0 faltants en la llargaria
     public void addZeros(BigNumber b) {
         //Variable per enmagatzemar el valor
         BigNumber withZeros = new BigNumber("");
@@ -528,7 +525,7 @@ class BigNumber {
         this.number = withZeros.number;
     }
 
-//clase per invertir string
+    //clase per invertir string
     public void invertString(BigNumber b) {
         //Variable per enmagatzemar el valor
         BigNumber invert = new BigNumber("");
