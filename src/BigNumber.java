@@ -12,16 +12,15 @@ class BigNumber {
 
 
     // Suma
-
     BigNumber add(BigNumber other) {
         BigNumber addition = new BigNumber("");
         int carry = 0;
 
         if (this.number.charAt(0) == '0') {
-            this.RemoveZeros(this);
+            this.removeZeros(this);
         }
         if (other.number.charAt(0) == '0') {
-            other.RemoveZeros(other);
+            other.removeZeros(other);
         }
 
         if (this.number.charAt(0) == '0' && other.number.charAt(0) == '0') {
@@ -49,7 +48,7 @@ class BigNumber {
                     }
 
                     if (this.number.length() > other.number.length()) {
-                        other.AddZeros(this);
+                        other.addZeros(this);
                         for (int i = this.number.length() - 1; i >= 0; i--) {
                             char char1 = this.number.charAt(i);
                             char char2 = other.number.charAt(i);
@@ -65,7 +64,7 @@ class BigNumber {
                     }
 
                     if (this.number.length() < other.number.length()) {
-                        this.AddZeros(other);
+                        this.addZeros(other);
                         for (int i = this.number.length() - 1; i >= 0; i--) {
                             char char1 = this.number.charAt(i);
                             char char2 = other.number.charAt(i);
@@ -80,12 +79,11 @@ class BigNumber {
                         }
                     }
 
-                    addition.InvertString(addition);
+                    addition.invertString(addition);
                 }
             }
         }
 
-        System.out.println(addition.number);
         return addition;
 
     }
@@ -97,11 +95,11 @@ class BigNumber {
         int carry = 0;
 
         if (this.number.charAt(0) == '0') {
-            this.RemoveZeros(this);
+            this.removeZeros(this);
         }
 
         if (other.number.charAt(0) == '0') {
-            other.RemoveZeros(other);
+            other.removeZeros(other);
         }
 
         if (this.number.charAt(0) == '0' && other.number.charAt(0) == '0') {
@@ -135,7 +133,7 @@ class BigNumber {
         }
 
         if (this.number.length() > other.number.length()) {
-            other.AddZeros(this);
+            other.addZeros(this);
             for (int i = this.number.length() - 1; i >= 0; i--) {
                 char char1 = this.number.charAt(i);
                 char char2 = (char) (other.number.charAt(i) - carry);
@@ -162,7 +160,7 @@ class BigNumber {
         }
 
         if (this.number.length() < other.number.length()) {
-            this.AddZeros(other);
+            this.addZeros(other);
             for (int i = this.number.length() - 1; i >= 0; i--) {
                 char char1 = this.number.charAt(i);
                 char char2 = (char) (other.number.charAt(i) - carry);
@@ -188,8 +186,8 @@ class BigNumber {
             }
         }
 
-        sub.InvertString(sub);
-        sub.RemoveZeros(sub);
+        sub.invertString(sub);
+        sub.removeZeros(sub);
         return sub;
 
     }
@@ -200,11 +198,11 @@ class BigNumber {
         String results = "";
 
         if (this.number.charAt(0) == '0') {
-            this.RemoveZeros(this);
+            this.removeZeros(this);
         }
 
         if (other.number.charAt(0) == '0') {
-            other.RemoveZeros(other);
+            other.removeZeros(other);
         }
 
         String[] addResults = new String[other.number.length()];
@@ -247,7 +245,7 @@ class BigNumber {
 
         if (addResults.length == 1) {
             BigNumber b1 = new BigNumber(addResults[0]);
-            b1.RemoveZeros(b1);
+            b1.removeZeros(b1);
             return b1;
         }
 
@@ -255,7 +253,7 @@ class BigNumber {
             BigNumber b1 = new BigNumber(addResults[0]);
             BigNumber b2 = new BigNumber(addResults[1]);
             BigNumber bResult = new BigNumber(b1.add(b2).number);
-            bResult.RemoveZeros(b2);
+            bResult.removeZeros(b2);
             return bResult;
         }
 
@@ -268,7 +266,7 @@ class BigNumber {
                 addBigNumber.number = addBigNumber.add(new BigNumber(addResults[i])).number;
             }
 
-            addBigNumber.RemoveZeros(addBigNumber);
+            addBigNumber.removeZeros(addBigNumber);
             return addBigNumber;
         }
         return null;
@@ -330,9 +328,9 @@ class BigNumber {
                     otherDiv = otherDiv.sub(other);
 
 
-                    otherDiv.InvertString(otherDiv);
-                    otherDiv.AddZeros(this);
-                    otherDiv.InvertString(otherDiv);
+                    otherDiv.invertString(otherDiv);
+                    otherDiv.addZeros(this);
+                    otherDiv.invertString(otherDiv);
 
                     this.number = this.sub(otherDiv).number;
                     thisDiv.number = this.number;
@@ -361,7 +359,7 @@ class BigNumber {
     BigNumber power(int n) {
         BigNumber power = new BigNumber("");
 
-        if (this.number.charAt(0) == '0') this.RemoveZeros(this);
+        if (this.number.charAt(0) == '0') this.removeZeros(this);
 
         if (n == 0) return new BigNumber("1");
 
@@ -369,7 +367,6 @@ class BigNumber {
 
         if (n == 2) {
             power = this.mult(this);
-            System.out.println(power.number);
             return power;
         }
 
@@ -388,7 +385,7 @@ class BigNumber {
 
     // Factorial
     BigNumber factorial() {
-        if (this.number.charAt(0) == '0') this.RemoveZeros(this);
+        if (this.number.charAt(0) == '0') this.removeZeros(this);
 
         BigNumber factorial = new BigNumber(this.number);
         BigNumber sub = new BigNumber("1");
@@ -400,7 +397,6 @@ class BigNumber {
             while (!factorial.number.equals("1")) {
                 factorialAdd = factorialAdd.mult(factorial);
                 factorial = factorial.sub(sub);
-                System.out.println(factorialAdd.number);
             }
         }
         return factorialAdd;
@@ -417,10 +413,10 @@ class BigNumber {
     public int compareTo(BigNumber other) {
         int number = 2;
         if (this.number.charAt(0) == '0') {
-            this.RemoveZeros(this);
+            this.removeZeros(this);
         }
         if (other.number.charAt(0) == '0') {
-            other.RemoveZeros(other);
+            other.removeZeros(other);
         }
 
         if (this.number.charAt(0) == '0' && other.number.charAt(0) == '0') {
@@ -485,11 +481,11 @@ class BigNumber {
         if (other instanceof BigNumber) {
             BigNumber o = (BigNumber) other;
             if (this.number.charAt(0) == '0') {
-                this.RemoveZeros(this);
+                this.removeZeros(this);
             }
 
             if (o.number.charAt(0) == '0') {
-                o.RemoveZeros(o);
+                o.removeZeros(o);
             }
 
             if (this.number.charAt(0) == '0' && o.number.charAt(0) == '0') return true;
@@ -500,7 +496,7 @@ class BigNumber {
     }
 
 
-    public void RemoveZeros(BigNumber b) {
+    public void removeZeros(BigNumber b) {
         BigNumber NoZero = new BigNumber("");
         for (int i = 0; i < b.number.length(); i++) {
             if (b.number.charAt(i) != '0') {
@@ -514,7 +510,7 @@ class BigNumber {
     }
 
 
-    public void AddZeros(BigNumber b) {
+    public void addZeros(BigNumber b) {
         BigNumber WithZeros = new BigNumber("");
         int diff = b.number.length() - this.number.length();
         for (int i = 0; i < diff; i++) {
@@ -524,12 +520,15 @@ class BigNumber {
         this.number = WithZeros.number;
     }
 
-    public void InvertString(BigNumber b) {
-        BigNumber Invert = new BigNumber("");
+
+    public void invertString(BigNumber b) {
+        //Variable per enmagatzemar el valor
+        BigNumber invert = new BigNumber("");
+        //Bucle per recorrer el string
         for (int i = b.number.length() - 1; i >= 0; i--) {
-            Invert.number += b.number.charAt(i);
+            invert.number += b.number.charAt(i);
         }
-        b.number = Invert.number;
+        b.number = invert.number;
     }
 
 }

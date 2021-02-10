@@ -209,7 +209,7 @@ public class BigNumberTest {
         b2 = new BigNumber("4563456345634563456345634563456456");
         assertEquals(new BigNumber("206973945425055556860816594709203925477253940263513300024871936"), b1.mult(b2));
     }
-
+/*
     @Test
     public void divisions() {
         BigNumber b1, b2;
@@ -250,7 +250,7 @@ public class BigNumberTest {
         b2 = new BigNumber("9999999999999999463499999999999999999");
         assertEquals(new BigNumber("5673"), b1.div(b2));
     }
-
+*/
    /* @Test
     public void arrels() {
         BigNumber b1;
