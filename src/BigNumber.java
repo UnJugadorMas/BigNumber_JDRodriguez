@@ -8,8 +8,9 @@ class BigNumber {
 
     // Constructor 2
     public BigNumber(BigNumber b) {
-
     }
+
+
     // Suma
 
     BigNumber add(BigNumber other) {
