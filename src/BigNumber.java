@@ -78,14 +78,11 @@ class BigNumber {
                             if (carry == 1 && i == 0) addition.number += carry;
                         }
                     }
-
                     addition.invertString(addition);
                 }
             }
         }
-
         return addition;
-
     }
 
 
@@ -123,7 +120,6 @@ class BigNumber {
                 if (char1 > char2) {
                     subChar = (char) (char1 - char2 + 48);
                 }
-
                 if (char1 == char2) {
                     subChar = 48;
                 }
@@ -151,11 +147,7 @@ class BigNumber {
                 if (char1 == char2) {
                     subChar = 48;
                 }
-
-
                 sub.number += subChar;
-
-
             }
         }
 
@@ -179,9 +171,7 @@ class BigNumber {
                     subChar = 48;
                 }
 
-
                 sub.number += subChar;
-
 
             }
         }
@@ -192,7 +182,7 @@ class BigNumber {
 
     }
 
-    // Multiplica
+    // Multiplicació
     BigNumber mult(BigNumber other) {
         int carry = 0;
         String results = "";
@@ -270,7 +260,6 @@ class BigNumber {
             return addBigNumber;
         }
         return null;
-
     }
 
     // Divideix
@@ -344,7 +333,6 @@ class BigNumber {
                 }
             }
         }
-
         mult.number = quocient;
         return mult;
     }
@@ -409,9 +397,11 @@ class BigNumber {
     }
 
     // Compara dos BigNumber. Torna 0 si són iguals, -1
-// si el primer és menor i torna 1 si el segon és menor
+    // si el primer és menor i torna 1 si el segon és menor
     public int compareTo(BigNumber other) {
+        //cream una variable amb el valor de 2
         int number = 2;
+
         if (this.number.charAt(0) == '0') {
             this.removeZeros(this);
         }
@@ -479,55 +469,73 @@ class BigNumber {
     @Override
     public boolean equals(Object other) {
         if (other instanceof BigNumber) {
+            //Asignam un nom a bignumber o
             BigNumber o = (BigNumber) other;
+            //Si te 0 en el primer numero
             if (this.number.charAt(0) == '0') {
+                //Llevam els 0 que sobren
                 this.removeZeros(this);
             }
-
+            //Si te 0 en el segon numero
             if (o.number.charAt(0) == '0') {
+                //Llevam els 0 que sobren
                 o.removeZeros(o);
             }
-
+        //si els 2 numeros tenen 0 tornam el valor true
             if (this.number.charAt(0) == '0' && o.number.charAt(0) == '0') return true;
-
+        //tornam el valor de number modificat fora 0
             return this.number.equals(o.number);
         }
+        //retornam false si no te cap 0 els 2 numeros
         return false;
     }
 
-
+//clase per llevar 0 que sobren en la llargaria, que no tenguin cap valor
     public void removeZeros(BigNumber b) {
-        BigNumber NoZero = new BigNumber("");
+        //Variable per enmagatzemar el valor
+        BigNumber noZero = new BigNumber("");
+        //Bucle per recorrer la longitud del string
         for (int i = 0; i < b.number.length(); i++) {
+            //Comprovam si el string te 0
             if (b.number.charAt(i) != '0') {
+                //Tornam a recorrer el string
                 for (int j = i; j < b.number.length(); j++) {
-                    NoZero.number += b.number.charAt(j);
+                    //Llevam els 0 que sobren perque tengui la misma llargaria
+                    noZero.number += b.number.charAt(j);
                 }
-                b.number = NoZero.number;
+                //Retornam els valor de number fora zero
+                b.number = noZero.number;
                 break;
             }
         }
     }
 
-
+//clase per afegir 0 faltants en la llargaria
     public void addZeros(BigNumber b) {
-        BigNumber WithZeros = new BigNumber("");
+        //Variable per enmagatzemar el valor
+        BigNumber withZeros = new BigNumber("");
+        //Comprobam la longitud dels 2 strings
         int diff = b.number.length() - this.number.length();
+        //Bucle per recorrer la longitud del string
         for (int i = 0; i < diff; i++) {
-            WithZeros.number += 0;
+            //afegim 0 perque tengui la misma llargaria el string
+            withZeros.number += 0;
         }
-        WithZeros.number += this.number;
-        this.number = WithZeros.number;
+        //Retornam els valor de number amb zeros afegits
+        withZeros.number += this.number;
+        this.number = withZeros.number;
     }
 
-
+//clase per invertir string
     public void invertString(BigNumber b) {
         //Variable per enmagatzemar el valor
         BigNumber invert = new BigNumber("");
-        //Bucle per recorrer el string
+        //Bucle per recorrer el string del number
         for (int i = b.number.length() - 1; i >= 0; i--) {
+            //invertim els valors
             invert.number += b.number.charAt(i);
         }
+        //Retornam els valor de number invertits
         b.number = invert.number;
     }
 
